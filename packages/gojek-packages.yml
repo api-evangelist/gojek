@@ -1,0 +1,122 @@
+generated: '2026-08-22'
+method: searched
+source: registry metadata endpoints (proxy.golang.org, registry.npmjs.org, search.maven.org, clojars.org, pub.dev), queried 2026-08-22
+api_client_sdk_count: 0
+note: >-
+  Gojek publishes NO client SDK for the GoBiz Partner Integration API. The
+  developer portal ships curl samples only, and points integrators at
+  https://oauth.net/code/ third-party OAuth libraries ("Not maintained by
+  Gojek"). Everything below is first-party Gojek Engineering open source -
+  infrastructure libraries, not API clients - so no SDKs pointer is emitted for
+  this provider. Each entry carries the version and publish date read from the
+  registry's own metadata endpoint.
+packages:
+- language: go
+  registry: go-modules
+  name: github.com/gojek/heimdall/v7
+  url: https://pkg.go.dev/github.com/gojek/heimdall/v7
+  install: go get github.com/gojek/heimdall/v7
+  official: true
+  api_client: false
+  purpose: Enhanced HTTP client for Go (retries, hystrix-backed circuit breaking).
+  version: v7.3.1
+  published: '2026-06-29'
+- language: go
+  registry: go-modules
+  name: github.com/gojek/courier-go
+  url: https://pkg.go.dev/github.com/gojek/courier-go
+  install: go get github.com/gojek/courier-go
+  official: true
+  api_client: false
+  purpose: Go client for Gojek's Courier MQTT-based long-running-connection stack.
+  version: v0.7.17
+  published: '2026-06-02'
+- language: go
+  registry: go-modules
+  name: github.com/gojek/work
+  url: https://pkg.go.dev/github.com/gojek/work
+  install: go get github.com/gojek/work
+  official: true
+  api_client: false
+  purpose: Background job processing for Go.
+  version: v0.8.2
+  published: '2026-06-01'
+- language: go
+  registry: go-modules
+  name: github.com/gojek/darkroom
+  url: https://pkg.go.dev/github.com/gojek/darkroom
+  install: go get github.com/gojek/darkroom
+  official: true
+  api_client: false
+  purpose: Image proxy / on-the-fly image manipulation service.
+  version: v0.4.2
+  published: '2023-10-02'
+- language: go
+  registry: go-modules
+  name: github.com/gojek/valkyrie
+  url: https://pkg.go.dev/github.com/gojek/valkyrie
+  install: go get github.com/gojek/valkyrie
+  official: true
+  api_client: false
+  purpose: Go wrapper for handling zero or more errors.
+  version: v0.0.0-20190210220504-8f62c1e7ba45
+  published: '2019-02-10'
+  note: Untagged; the latest module version is still a 2019 pseudo-version.
+- language: go
+  registry: go-modules
+  name: github.com/gojek/weaver
+  url: https://pkg.go.dev/github.com/gojek/weaver
+  install: go get github.com/gojek/weaver
+  official: true
+  api_client: false
+  purpose: HTTP reverse proxy with dynamic sharding strategies.
+  version: v0.0.1
+  published: '2019-02-04'
+- language: kotlin
+  registry: maven-central
+  name: com.gojek.courier:courier
+  url: https://central.sonatype.com/artifact/com.gojek.courier/courier
+  install: implementation("com.gojek.courier:courier:0.3.1")
+  official: true
+  api_client: false
+  purpose: Courier Android MQTT client (20 sibling artifacts under com.gojek.courier).
+  version: 0.3.1
+  published: '2024-11-11'
+- language: dart
+  registry: pub.dev
+  name: courier_flutter
+  url: https://pub.dev/packages/courier_flutter
+  install: flutter pub add courier_flutter
+  official: true
+  api_client: false
+  purpose: Dart/Flutter port of Courier.
+  version: 5.0.3
+  published: '2026-06-02'
+- language: javascript
+  registry: npm
+  name: "@gojek/clickstream-web"
+  url: https://www.npmjs.com/package/@gojek/clickstream-web
+  install: npm install @gojek/clickstream-web
+  official: true
+  api_client: false
+  purpose: Web event-ingestion library for Gojek's Clickstream platform.
+  version: 1.0.3
+  published: '2023-02-02'
+- language: clojure
+  registry: clojars
+  name: tech.gojek/ziggurat
+  url: https://clojars.org/tech.gojek/ziggurat
+  install: '[tech.gojek/ziggurat "4.13.2"]'
+  official: true
+  api_client: false
+  purpose: Stream-processing framework for stateless Kafka applications.
+  version: 4.13.2
+  published: null
+  note: >-
+    Clojars' artifact API returns latest_version and recent_versions but no
+    release date; checked 2026-08-22 and there is nothing dated to record.
+unofficial_wrappers_note: >-
+  Several community packages wrap Gojek's private consumer app endpoints (npm
+  gojek-api, github.com/mychaelgo/gojek). They are third-party reverse
+  engineering of an unpublished internal API, are not Gojek products, and are
+  deliberately excluded.

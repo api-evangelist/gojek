@@ -1,0 +1,21 @@
+generated: '2026-08-22'
+method: searched
+source: https://app.gobiz.com/files/static/cpp/api-reference/index.html
+docs: https://developer.gobiz.com/docs/api/intro/
+limit_count: 0
+note: >-
+  No rate limits are published. The full GoBiz API reference and the developer
+  portal were searched for quota, throttle, rate-limit, 429 and RateLimit-*
+  header language on 2026-08-22 and none appears; the HTTP Status Code Summary
+  lists only 2xx, 400, 401, 404, 406, 409 and 415, with no 429. An integrator
+  cannot learn the ceiling before hitting it.
+limits: []
+response_headers: []
+exhaustion_status: null
+outbound_limits:
+  note: >-
+    The only published throughput contract runs the other way - on GoBiz's
+    webhook deliveries to the partner: a 15-second HTTP timeout, a 5-second
+    recommended response time, and at most five retries at 2m / 10m / 30m /
+    1.5h / 3.5h.
+  source: https://developer.gobiz.com/docs/api/webhooks/best-practices-to-handle-notification/

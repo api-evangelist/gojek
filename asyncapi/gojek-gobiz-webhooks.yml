@@ -1,0 +1,53 @@
+generated: '2026-08-22'
+method: searched
+source: https://developer.gobiz.com/docs/api/event-list
+spec_type: Webhooks
+asyncapi_published: false
+note: >-
+  Gojek publishes a documented webhook (notification) surface for GoBiz but no
+  AsyncAPI document. This is the captured webhook catalog, not a generated
+  AsyncAPI - none was fabricated.
+delivery:
+  transport: HTTPS POST to a partner-registered callback URL
+  subscription_api: https://developer.gobiz.com/docs/api/notification-subscriptions/
+  subscription_endpoints:
+  - POST /integrations/partner/v1/notification-subscriptions
+  - GET /integrations/partner/v1/notification-subscriptions
+  - GET /integrations/partner/v1/notification-subscriptions/{notification_id}
+  - PUT /integrations/partner/v1/notification-subscriptions/{notification_id}
+  - DELETE /integrations/partner/v1/notification-subscriptions/{notification_id}
+  - POST /integrations/partner/outlets/{outlet_id}/v1/notification-subscriptions
+  - GET /integrations/partner/outlets/{outlet_id}/v1/notification-subscriptions
+  - GET /integrations/partner/outlets/{outlet_id}/v1/notification-subscriptions/{notification_id}
+  - PUT /integrations/partner/outlets/{outlet_id}/v1/notification-subscriptions/{notification_id}
+  - DELETE /integrations/partner/outlets/{outlet_id}/v1/notification-subscriptions/{notification_id}
+  troubleshooting_endpoint: GET /integrations/partner/notifications?entity_id={entity_id}
+  scope_note: Events are accessible to the partner as per the scopes defined in their API endpoints.
+security:
+  signature_header: X-Go-Signature
+  algorithm: HMAC-SHA256(notification_secret_key, request_body)
+  requirements:
+  - HTTPS endpoint on a standard port (80/443); self-signed certificates are rejected.
+  - Compare the computed signature and ignore the notification when it does not match.
+  source: https://developer.gobiz.com/docs/api/webhooks/receiving-notifications/
+reliability:
+  timeout_seconds: 15
+  target_response_seconds: 5
+  at_least_once: true
+  max_retries: 5
+  retry_intervals: ['2 minutes', '10 minutes', '30 minutes', '1.5 hours', '3.5 hours']
+  ordering_guaranteed: false
+  source: https://developer.gobiz.com/docs/api/webhooks/best-practices-to-handle-notification/
+events:
+- {name: gofood.order.created, description: Triggered when a GoFood order is created.}
+- {name: gofood.order.awaiting_merchant_acceptance, description: Triggered when the system is waiting for the merchant to accept the order.}
+- {name: gofood.order.merchant_accepted, description: Triggered when the merchant accepted a new GoFood order.}
+- {name: gofood.order.driver_otw_pickup, description: Triggered when the driver is on the way to the restaurant.}
+- {name: gofood.order.driver_arrived, description: Triggered when the driver arrives at the restaurant.}
+- {name: gofood.order.placed, description: Triggered when the order is placed.}
+- {name: gofood.order.completed, description: Triggered when the order is completed.}
+- {name: gofood.order.cancelled, description: Triggered when the order is cancelled.}
+- {name: gofood.order.webhook_error, description: Triggered when GoBiz finds unmet requirements while processing a gofood.order.* webhook.}
+- {name: gofood.catalog.menu_mapping_updated, description: Triggered when the menu mapping has finished being processed by GoBiz.}
+- {name: payment.transaction.settlement, description: Triggered on settlement of a payment transaction.}
+event_count: 11

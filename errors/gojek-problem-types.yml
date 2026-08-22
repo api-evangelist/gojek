@@ -1,0 +1,62 @@
+generated: '2026-08-22'
+method: searched
+source: https://app.gobiz.com/files/static/cpp/api-reference/index.html#error-glossary
+docs: https://developer.gobiz.com/docs/api/objects-glossary
+format: vendor-envelope
+rfc9457: false
+note: >-
+  GoBiz does not use application/problem+json. Errors are returned inside the
+  standard GoBiz response envelope with success:false and an errors[] array.
+  Captured from the published Error Glossary and HTTP Status Code Summary; no
+  OpenAPI exists to derive from.
+envelope:
+  shape: "{ success: false, errors: [ { message_title, message, code?, message_severity? } ] }"
+  fields:
+  - {name: success, type: boolean, description: "Always false on an error."}
+  - {name: errors, type: 'array(object)', description: "Wrapper for the error objects returned by the API call."}
+  - {name: 'errors[].message_title', type: string, description: "Short description of the HTTP error."}
+  - {name: 'errors[].message', type: string, description: "Describes the cause of the HTTP error."}
+  - {name: 'errors[].code', type: string, description: "Vendor code, e.g. HTTP_401. Present on session/auth errors."}
+  - {name: 'errors[].message_severity', type: string, description: "e.g. error."}
+status_codes:
+- {status: 200, title: OK, description: The request is successful.}
+- {status: 201, title: Created, description: The request is successful and the resource is created.}
+- {status: 400, title: Bad Request, description: The request cannot be processed due to an error (for example, incorrect parameters).}
+- {status: 401, title: Unauthorized, description: The request is not authenticated or the session has expired.}
+- {status: 404, title: Not Found, description: The requested resource does not exist or the outlet is not registered for integration.}
+- {status: 406, title: Not Acceptable, description: Invalid Accept/versioning header.}
+- {status: 409, title: Conflict, description: Returned by order-state transitions such as Reject Order when the order is no longer in an acceptable state.}
+- {status: 415, title: Unsupported Media Type, description: Invalid Accept/versioning header.}
+problems:
+- name: UnsupportedAcceptType
+  statuses: [406, 415]
+  title: UnsupportedAcceptType
+  message_example: "Invalid Accept header: application/vnd.eim.v0+json"
+  cause: Invalid versioning header in the request.
+  remediation: Send the Accept header version the endpoint documents.
+  source: https://app.gobiz.com/files/static/cpp/api-reference/index.html#error-glossary
+- name: UnregisteredOutlet
+  statuses: [404]
+  title: Requested resource not found
+  message_example: "The outlet is not yet registered for integration. Please contact the support team."
+  cause: The outlet is not yet registered in the Partner Integration system.
+  remediation: Contact GoBiz support to register the outlet before calling outlet-scoped endpoints.
+  source: https://app.gobiz.com/files/static/cpp/api-reference/index.html#error-glossary
+- name: Unauthorized
+  statuses: [401]
+  code: HTTP_401
+  title: Session Expired
+  message_example: "Your session is expired. Please login again."
+  cause: Missing, invalid or expired access token, or a token without the required scope.
+  remediation: >-
+    Re-run the OAuth 2.0 token flow before expires_in elapses; the client is
+    responsible for refreshing just before the window ends or on a 401.
+  source: https://app.gobiz.com/files/static/cpp/api-reference/index.html#error-glossary
+webhook_error_event:
+  event: gofood.order.webhook_error
+  description: >-
+    Emitted by GoBiz when its own system finds unmet requirements while
+    processing a gofood.order.* webhook - an error surface delivered as an event
+    rather than an HTTP response.
+  source: https://developer.gobiz.com/docs/api/event-list
+problem_count: 3

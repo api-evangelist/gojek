@@ -1,0 +1,51 @@
+generated: '2026-08-22'
+method: derived
+status: candidate
+source: https://app.gobiz.com/files/static/cpp/api-reference/index.html
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+  note: >-
+    Gojek ships no MCP server, hosted or local. Searched the developer portal,
+    gojek.com, the github.com/gojek organisation and the public MCP registries
+    on 2026-08-22 and found nothing. No endpoint URL has been guessed. The tools
+    below are a CANDIDATE surface derived from the operations Gojek documents in
+    its own API reference; they are not callable today.
+server: null
+derivation_note: >-
+  Derived from the endpoint tables published in the GoBiz API reference. There
+  is no OpenAPI to bind to, so each candidate tool cites its HTTP method, path
+  and required OAuth scope from the docs rather than an operationId. Nothing was
+  invented - every path below appears verbatim in the reference.
+tools:
+- {name: list_outlets, description: List all outlets linked to the partner, http: 'GET /integrations/partner/v1/linked-outlets', scope: 'partner:outlet:read'}
+- {name: link_outlet, description: Link an outlet to the partner integration, http: 'POST /integrations/partner/v1/outlet-link', scope: 'partner:outlet:write'}
+- {name: get_token_info, description: Read basic token information for the authenticated client, http: 'GET /integrations/partner/v1/token-info', scope: 'openid'}
+- {name: get_outlet, description: Get information for a specific outlet, http: 'GET /integrations/partner/outlets/{outlet_id}/v1', scope: 'partner:outlet:read'}
+- {name: update_gofood_catalog, description: Push an updated GoFood outlet catalog, http: 'PUT /integrations/gofood/outlets/{outlet_id}/v2/catalog', scope: 'gofood:catalog:write'}
+- {name: get_gofood_catalog, description: Read the current GoFood outlet catalog, http: 'GET /integrations/gofood/outlets/{outlet_id}/v2/catalog', scope: 'gofood:catalog:read'}
+- {name: update_menu_item_stock, description: Update out-of-stock status for menu items, http: 'PUT /integrations/gofood/outlets/{outlet_id}/v2/menu_item_stocks', scope: 'gofood:catalog:write'}
+- {name: update_variant_stock, description: Update out-of-stock status for variants, http: 'PUT /integrations/gofood/outlets/{outlet_id}/v2/variant_stocks', scope: 'gofood:catalog:write'}
+- {name: mark_food_prepared, description: Mark a GoFood order as prepared / ready, http: 'PUT /integrations/gofood/outlets/{outlet_id}/v1/orders/{order_type}/{order_id}/food-prepared', scope: 'gofood:order:write'}
+- {name: accept_order, description: Accept a GoFood order, http: 'PUT /integrations/gofood/outlets/{outlet_id}/v1/orders/{order_type}/{order_id}/accepted', scope: 'gofood:order:write'}
+- {name: reject_order, description: Reject/cancel a GoFood order with a reason code, http: 'PUT /integrations/gofood/outlets/{outlet_id}/v1/orders/{order_type}/{order_id}/cancelled', scope: 'gofood:order:write'}
+- {name: update_outlet_properties, description: Update restaurant properties for an outlet, http: 'PUT /integrations/gofood/outlets/{outlet_id}/v1/properties', scope: 'gofood:outlet:write'}
+- {name: create_promotion, description: Create an SKU-level GoFood promotion, http: 'POST /integrations/promo/outlets/{outlet_id}/v1/food-promos', scope: 'promo:food_promo:write'}
+- {name: list_promotions, description: List GoFood promotions for an outlet, http: 'GET /integrations/promo/outlets/{outlet_id}/v1/food-promos', scope: 'promo:food_promo:read'}
+- {name: get_promotion, description: Get details of a specific promotion, http: 'GET /integrations/promo/outlets/{outlet_id}/v1/food-promos/{promotion_id}', scope: 'promo:food_promo:read'}
+- {name: deactivate_promotion, description: Deactivate an active promotion, http: 'PUT /integrations/promo/outlets/{outlet_id}/v1/food-promos/{promotion_id}/deactivate', scope: 'promo:food_promo:write'}
+- {name: delete_promotion, description: Delete a promotion, http: 'DELETE /integrations/promo/outlets/{outlet_id}/v1/food-promos/{promotion_id}', scope: 'promo:food_promo:write'}
+- {name: create_payment_transaction, description: Create a QRIS payment transaction and return QR data, http: 'POST /integrations/payment/outlets/{outlet_id}/v2/transactions', scope: 'payment:transaction:write'}
+- {name: get_payment_transaction, description: Get details of a payment transaction, http: 'GET /integrations/payment/outlets/{outlet_id}/v1/transactions/{id}', scope: 'payment:transaction:read'}
+- {name: create_notification_subscription, description: Subscribe to GoBiz webhook events, http: 'POST /integrations/partner/v1/notification-subscriptions', scope: 'partner:outlet:write'}
+- {name: list_notification_subscriptions, description: List webhook subscriptions, http: 'GET /integrations/partner/v1/notification-subscriptions', scope: 'partner:outlet:read'}
+- {name: delete_notification_subscription, description: Delete a webhook subscription, http: 'DELETE /integrations/partner/v1/notification-subscriptions/{notification_id}', scope: 'partner:outlet:write'}
+- {name: get_notification_details, description: Troubleshoot notification delivery for an entity, http: 'GET /integrations/partner/notifications?entity_id={entity_id}', scope: 'partner:outlet:read'}
+- {name: list_mokapos_outlets, description: List a MokaPOS business outlets, http: 'GET /integrations/mokapos/businesses/{business_id}/v1/outlets', scope: 'mokapos:library:read'}
+- {name: get_mokapos_sales_summary, description: Get MokaPOS sales summary, http: 'GET /integrations/mokapos/outlets/{outlet_id}/v1/reporting/sales-summary', scope: 'mokapos:reporting:read'}
+- {name: get_mokapos_invoices, description: Get MokaPOS invoices list, http: 'GET /integrations/mokapos/outlets/{outlet_id}/v1/reporting/invoices', scope: 'mokapos:reporting:read'}
+tool_count: 26

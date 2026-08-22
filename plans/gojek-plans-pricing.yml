@@ -1,0 +1,25 @@
+generated: '2026-08-22'
+method: searched
+source: https://developer.gobiz.com/contact-us
+plan_count: 0
+plans: []
+note: >-
+  Gojek publishes no plans, tiers or price list for the GoBiz Partner
+  Integration API. Access is granted per partner: the developer portal routes
+  every access request through a contact form
+  (developer.gobiz.com/contact-us/?selection=for-developer), OAuth client
+  credentials are "issued by Gojek", and the portal FAQ states that only the
+  developer assigned using the owner's registered email in GoBiz may create an
+  integration, and that going live requires Gojek to verify the integration via
+  the same form. The commercial relationship that does exist is the merchant
+  commission on GoFood orders, which is a merchant contract rather than an API
+  plan and is not published on the developer portal.
+access_model:
+  pricing: unknown
+  onboarding: contact-sales
+  trial: false
+  sandbox: true
+  public_docs: true
+evidence:
+- {url: 'https://developer.gobiz.com/contact-us', status: 200}
+- {url: 'https://developer.gobiz.com/docs/docs/getting-started/', status: 200}

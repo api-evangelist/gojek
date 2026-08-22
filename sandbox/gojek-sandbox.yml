@@ -1,0 +1,36 @@
+generated: '2026-08-22'
+method: searched
+source: https://developer.gobiz.com/docs/docs/getting-started/
+docs: https://developer.gobiz.com/docs/api/intro/
+published: true
+model: separate-environment
+note: >-
+  GoBiz separates test from live by environment and credential set, not by a key
+  prefix or a test-mode flag. Sandbox is described as the place partners perform
+  internal end-to-end testing before Gojek verifies the integration and issues
+  production credentials.
+environments:
+- name: Sandbox
+  api_base_url: https://api.partner-sandbox.gobiz.co.id/
+  oauth_base_url: https://integration-goauth.gojekapi.com
+  token_endpoint: https://integration-goauth.gojekapi.com/oauth2/token
+  authorization_endpoint: https://integration-goauth.gojekapi.com/oauth2/auth
+  credentials: GoAuth Staging credentials
+- name: Production
+  api_base_url: https://api.gobiz.co.id/
+  oauth_base_url: https://accounts.go-jek.com
+  token_endpoint: https://accounts.go-jek.com/oauth2/token
+  credentials: GoAuth Production credentials
+promotion_to_live: >-
+  "Once you've completed the integration, please contact us via this form and
+  we'll verify the integration." - GoBiz Developer Portal FAQ. There is no
+  self-serve switch from sandbox to production.
+test_values:
+  published: false
+  note: >-
+    No magic test values are published - no test outlet ids, test QR payloads,
+    test card or wallet identifiers, and no fixture/trigger tooling. Partners
+    test against their own sandbox-issued outlets. Nothing has been invented
+    here.
+test_clock: false
+fixtures: false

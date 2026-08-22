@@ -1,0 +1,47 @@
+generated: '2026-08-22'
+method: searched
+source: https://developer.gobiz.com/docs/api/intro/
+versioning:
+  scheme: uri-path
+  note: >-
+    Resource versions are path segments after the outlet id
+    (/integrations/gofood/outlets/{outlet_id}/v1/catalog and .../v2/catalog run
+    side by side; payment transactions moved from v1 to v2). A vendor Accept
+    header (application/vnd.eim.v0+json family) also participates - an
+    unrecognised value returns UnsupportedAcceptType (406/415).
+  current: mixed (v1 and v2 per resource)
+  docs: https://developer.gobiz.com/docs/api/intro/
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  note: >-
+    No deprecation policy, Sunset/Deprecation header support (RFC 8594) or
+    end-of-life schedule is published anywhere on developer.gobiz.com or in the
+    GoBiz API reference. v1 payment transactions are superseded by v2 in the
+    reference without any stated retirement date.
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA or uptime commitment is published for the GoBiz API.
+status_page:
+  url: null
+  published: false
+  note: >-
+    No status page found. status.gojek.com does not resolve (probed 2026-08-22,
+    curl exit 6 / DNS failure) and neither developer.gobiz.com nor gojek.com
+    links one.
+changelog:
+  url: null
+  published: false
+  note: >-
+    developer.gobiz.com/blog exists (HTTP 200) but still serves the unmodified
+    Docusaurus starter posts ("Welcome", "MDX Blog Post", "First Blog Post",
+    dated 2019-2021 and authored by Docusaurus maintainers). It is scaffolding,
+    not a Gojek changelog, and is deliberately NOT wired as a Blog or ChangeLog
+    pointer.
+  evidence:
+  - {url: 'https://developer.gobiz.com/blog', status: 200, finding: docusaurus-starter-content}
+deprecated_operations: []
+observed_lifecycle_signals:
+- {signal: 'New! Outlet Linking API', source: 'https://developer.gobiz.com/', note: 'Announced on the portal home page; no dated release note accompanies it.'}

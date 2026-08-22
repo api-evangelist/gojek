@@ -1,23 +1,144 @@
 aid: gojek
 name: GoJek
-description: 'GoJek is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Gojek (PT Aplikasi Karya Anak Bangsa, part of GoTo Group) is Indonesia's
+  on-demand super app, running ride hailing (GoRide, GoCar), food delivery
+  (GoFood), parcel and logistics (GoSend, GoBox), shopping (GoMart, GoShop) and
+  payments (GoPay) across Indonesia, Singapore and Vietnam. Its developer-facing
+  surface is not the consumer app but the GoBiz Platform - the merchant
+  operating system Gojek runs its restaurants and small businesses on - which
+  publishes the GoBiz Partner Integration API at developer.gobiz.com. That REST
+  API lets POS vendors, online-food aggregators and enterprise merchants link
+  outlets, sync GoFood catalogs, accept/reject and mark orders ready, create
+  SKU-level promotions, take QRIS payment transactions, pull MokaPOS reporting
+  and subscribe to webhook notifications. It is OAuth 2.0 only - client
+  credentials for direct merchant integrations and authorization code with
+  OpenID Connect for facilitators - across sandbox (api.partner-sandbox.gobiz.co.id)
+  and production (api.gobiz.co.id) environments. Gojek Engineering also runs a
+  substantial open-source organisation at github.com/gojek (Heimdall, Courier,
+  Ziggurat, Weaver, Darkroom, Clickstream).
 url: https://raw.githubusercontent.com/api-evangelist/gojek/refs/heads/main/apis.yml
+image: https://developer.gobiz.com/img/favicon/apple-touch-icon.png
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-22'
 modified: '2026-08-22'
 tags:
 - Company
-apis: []
+- Super App
+- Ride Hailing
+- Food Delivery
+- Point of Sale
+- Merchant Platform
+- Payments
+- QRIS
+- Logistics
+- Indonesia
+- Southeast Asia
+- Webhooks
+- OAuth
+apis:
+- name: GoBiz Partner Integration API
+  description: >-
+    The GoBiz Partner Integration API is Gojek's merchant-side REST API. It
+    covers outlet information and outlet linking, GoFood catalog sync and
+    out-of-stock updates, order acceptance / rejection / food-ready marking,
+    SKU-level GoFood promotions, outlet properties, QRIS payment transaction
+    creation and lookup, MokaPOS library and reporting reads, and notification
+    (webhook) subscription management. All calls are Bearer-token authenticated
+    with OAuth 2.0 tokens issued by the Gojek GoAuth server; every response uses
+    a success/data/errors envelope.
+  humanURL: https://developer.gobiz.com/docs/api/intro/
+  baseURL: https://api.gobiz.co.id
+  tags:
+  - Merchant Platform
+  - Food Delivery
+  - Point of Sale
+  - Payments
+  - Webhooks
+  properties:
+  - type: Documentation
+    url: https://developer.gobiz.com/docs/docs/intro/
+  - type: APIReference
+    url: https://developer.gobiz.com/docs/api/intro/
+  - type: GettingStarted
+    url: https://developer.gobiz.com/docs/docs/getting-started/
+  - type: Authentication
+    url: authentication/gojek-authentication.yml
+  - type: OAuthScopes
+    url: scopes/gojek-scopes.yml
+  - type: Webhooks
+    url: asyncapi/gojek-gobiz-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/gojek-problem-types.yml
+  - type: Sandbox
+    url: sandbox/gojek-sandbox.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/gojek-domain-security.yml
 - type: Website
+  url: https://www.gojek.com/
+- type: DeveloperPortal
+  url: https://developer.gobiz.com/
+- type: Documentation
+  url: https://developer.gobiz.com/docs/docs/intro/
+- type: APIReference
+  url: https://developer.gobiz.com/docs/api/intro/
+- type: GettingStarted
+  url: https://developer.gobiz.com/docs/docs/getting-started/
+- type: Support
+  url: https://developer.gobiz.com/contact-us
+- type: HelpCenter
+  url: https://gojek.my.site.com/gobizmerchant/s/
+- type: Blog
+  url: https://www.gojek.com/blog
+- type: GitHubOrganization
+  url: https://github.com/gojek
+- type: TermsOfService
+  url: https://app.gobiz.com/files/terms-and-condition/gobiz-developer-portal-v01.2022
+- type: PrivacyPolicy
+  url: https://www.gojek.com/en-id/privacy-policies/
+- type: SecondaryMarketListing
   url: https://forgeglobal.com/gojek_stock/
+- type: Authentication
+  url: authentication/gojek-authentication.yml
+- type: OAuthScopes
+  url: scopes/gojek-scopes.yml
+- type: Conventions
+  url: conventions/gojek-conventions.yml
+- type: Idempotency
+  url: conventions/gojek-conventions.yml
+- type: ErrorCatalog
+  url: errors/gojek-problem-types.yml
+- type: Webhooks
+  url: asyncapi/gojek-gobiz-webhooks.yml
+- type: Lifecycle
+  url: lifecycle/gojek-lifecycle.yml
+- type: Conformance
+  url: conformance/gojek-conformance.yml
+- type: Sandbox
+  url: sandbox/gojek-sandbox.yml
+- type: RateLimits
+  url: rate-limits/gojek-rate-limits.yml
+- type: Plans
+  url: plans/gojek-plans-pricing.yml
+- type: Packages
+  url: packages/gojek-packages.yml
+- type: LLMsTxt
+  url: llms/gojek-llms.txt
+x-enrichment:
+  date: '2026-08-22'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1
+x-catalog-note: >-
+  Gojek is also represented in the network as goto-gojek (GoTo Group index) and
+  goto (parent holding company); midtrans covers the GoTo Financial payment
+  gateway. This record profiles Gojek's own merchant developer surface (GoBiz)
+  and is a duplicate-density candidate for the merge campaign.

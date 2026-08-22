@@ -1,0 +1,144 @@
+generated: '2026-08-22'
+method: searched
+source: https://app.gobiz.com/files/static/cpp/api-reference/index.html
+docs: https://developer.gobiz.com/docs/api/intro/
+api: GoBiz Partner Integration API
+authentication:
+  style: oauth2-bearer
+  header: "Authorization: Bearer {access-token}"
+  models: [client_credentials (Direct Integration), authorization_code + OIDC (Facilitator)]
+  see: authentication/gojek-authentication.yml
+content_type:
+  request: application/json
+  response: application/json
+  note: "Content-Type: application/json is a required request header on every GoBiz API call."
+idempotency:
+  supported: true
+  headers:
+  - name: Idempotency-Key
+    scope: Payment Integration (POST /integrations/payment/outlets/{outlet_id}/v2/transactions)
+    required: true
+    max_length: 32
+    format: any random string
+    retention: >-
+      Gojek recycles idempotency keys after a month; a key may be reused a month
+      after its creation.
+    behaviour: >-
+      The server reads the Idempotency-Key to decide whether to return the
+      previous response or create a new transaction, guaranteeing a payment
+      request is processed only once per key.
+    source: https://app.gobiz.com/files/static/cpp/api-reference/index.html#create-payment-transaction
+  - name: X-Idempotency-Key
+    scope: Promotions (POST /integrations/promo/outlets/{outlet_id}/v1/food-promos)
+    required: true
+    max_length: 32
+    format: String(UUID)
+    behaviour: identifies whether the request is a new request or a retry request
+    source: https://app.gobiz.com/files/static/cpp/api-reference/index.html#create-promotions
+  webhook_guidance: >-
+    GoBiz explicitly instructs receivers to implement notification handling in an
+    idempotent way and suggests tracking entries by Idempotency-Key, because in
+    rare cases the same event is delivered more than once.
+request_tracing:
+  header: X-Request-ID
+  required: false
+  max_length: 128
+  behaviour: >-
+    Echoed back on the response headers. If a valid x-request-id is present on the
+    request it is reused; otherwise GoBiz generates one and does not reject the
+    request.
+  source: https://app.gobiz.com/files/static/cpp/api-reference/index.html#create-promotions
+pagination:
+  documented: false
+  note: >-
+    No pagination parameters, cursors or page-envelope fields are documented
+    anywhere in the GoBiz API reference; collection endpoints (Get All Outlets,
+    Get Promotions, MokaPOS reporting) return a plain data object with no
+    published paging contract.
+versioning:
+  scheme: uri-path
+  note: >-
+    Version segments sit inside the resource path after the outlet id, e.g.
+    /integrations/gofood/outlets/{outlet_id}/v1/catalog vs .../v2/catalog, so
+    v1 and v2 of the same resource are served side by side. A vendor Accept
+    header (application/vnd.eim.v0+json) also participates in versioning: an
+    invalid value returns the UnsupportedAcceptType error.
+  see: lifecycle/gojek-lifecycle.yml
+error_envelope:
+  shape: "{ success: boolean, data: object, errors: array(object) }"
+  success_field: success
+  error_fields: [message_title, message, code, message_severity]
+  rfc9457: false
+  media_type: application/json
+  see: errors/gojek-problem-types.yml
+rate_limit_signalling:
+  documented: false
+  note: No RateLimit-*/X-RateLimit-* headers, quotas or 429 semantics are published.
+  see: rate-limits/gojek-rate-limits.yml
+webhooks:
+  signature_header: X-Go-Signature
+  signature_algorithm: HMAC-SHA256(notification_secret_key, request_body)
+  timeout_seconds: 15
+  recommended_response_time_seconds: 5
+  retry_policy:
+    max_retries: 5
+    intervals: ['2 minutes', '10 minutes', '30 minutes', '1.5 hours', '3.5 hours']
+    by_status:
+      '2xx': no retries (success)
+      '500': retry once
+      '503': retry four times
+      '400/404': retry twice
+      '301/302/303': no retries
+      '307/308': follow the new URL with POST and the same body, max five redirects
+      other: retry five times
+  ordering: >-
+    Delivery order is not guaranteed; GoBiz tells receivers to gracefully ignore
+    out-of-sequence status notifications.
+  forward_compatibility: >-
+    Receivers must parse notification bodies non-strictly and ignore unknown
+    fields so GoBiz can add fields without breaking old clients.
+  see: asyncapi/gojek-gobiz-webhooks.yml
+dry_run_mode:
+  supported: false
+  note: >-
+    No dry-run / preview / simulate flag is documented. The published rehearsal
+    mechanism is the separate sandbox environment
+    (https://api.partner-sandbox.gobiz.co.id/), not a per-request dry run.
+reversibility:
+  grade: documented
+  note: >-
+    GoBiz publishes reversal operations for its three write surfaces, but states
+    no time window for any of them, so this grades as documented rather than
+    verified. No window is asserted here that the docs do not state.
+  surfaces:
+  - write_operation: Accept Order (PUT /integrations/gofood/outlets/{outlet_id}/v1/orders/{order_type}/{order_id}/accepted)
+    reversal: Reject Order (PUT /integrations/gofood/outlets/{outlet_id}/v1/orders/{order_type}/{order_id}/cancelled)
+    reversal_inputs: [cancel_reason_code (HIGH_DEMAND | RESTAURANT_CLOSED | ITEMS_OUT_OF_STOCK | OTHERS), cancel_reason_description]
+    window: not stated in the docs
+    docs: https://developer.gobiz.com/docs/api/food-integration/
+  - write_operation: Create Promotions (POST /integrations/promo/outlets/{outlet_id}/v1/food-promos)
+    reversal: Deactivate a Promotion (PUT .../food-promos/{promotion_id}/deactivate) and Delete a Promotion (DELETE .../food-promos/{promotion_id})
+    window: not stated in the docs
+    docs: https://developer.gobiz.com/docs/api/food-integration/
+  - write_operation: Create Notification Subscription (POST /integrations/partner/v1/notification-subscriptions)
+    reversal: Delete Notification Subscription (DELETE /integrations/partner/v1/notification-subscriptions/{notification_id})
+    window: not stated in the docs
+    docs: https://developer.gobiz.com/docs/api/notification-subscriptions/
+  - write_operation: Create Payment Transaction (POST /integrations/payment/outlets/{outlet_id}/v2/transactions)
+    reversal: none published
+    note: >-
+      No refund, void, cancel or reverse operation is documented for the GoBiz
+      payment transaction surface. The only safety mechanism published is the
+      required Idempotency-Key, which prevents a duplicate charge but cannot
+      undo one.
+    window: n/a
+  - write_operation: Link Outlet (POST /integrations/partner/v1/outlet-link)
+    reversal: Unlink Outlet
+    window: not stated in the docs
+    docs: https://developer.gobiz.com/docs/api/outlet-information/
+cross_links:
+  errors: errors/gojek-problem-types.yml
+  lifecycle: lifecycle/gojek-lifecycle.yml
+  authentication: authentication/gojek-authentication.yml
+  rate_limits: rate-limits/gojek-rate-limits.yml
+  sandbox: sandbox/gojek-sandbox.yml

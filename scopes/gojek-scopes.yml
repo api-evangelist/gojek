@@ -1,0 +1,42 @@
+generated: '2026-08-22'
+method: searched
+source: https://developer.gobiz.com/docs/api/auth/direct-integration/
+docs: https://developer.gobiz.com/docs/api/auth/direct-integration/
+note: >-
+  Derived from the published GoBiz scope reference tables, not from an OpenAPI
+  document - Gojek publishes no machine-readable spec. The client-credentials
+  table on the Direct Integration page lists 18 scopes; the Facilitator
+  (authorization code) table adds the two OpenID Connect scopes below.
+schemes:
+- name: go_auth_client_credentials
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://accounts.go-jek.com/oauth2/token
+    tokenUrlSandbox: https://integration-goauth.gojekapi.com/oauth2/token
+- name: go_auth_authorization_code
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://integration-goauth.gojekapi.com/oauth2/auth
+    tokenUrl: https://accounts.go-jek.com/oauth2/token
+scopes:
+- {scope: 'openid', description: 'To read basic token info.', flows: [authorizationCode]}
+- {scope: 'offline', description: 'To regenerate access token (refresh token).', flows: [authorizationCode]}
+- {scope: 'partner:outlet:read', description: 'To read outlet data.', flows: [clientCredentials, authorizationCode]}
+- {scope: 'partner:outlet:write', description: 'To edit or update outlet data.', flows: [clientCredentials, authorizationCode]}
+- {scope: 'gofood:catalog:read', description: 'To read GoFood menu.', flows: [clientCredentials, authorizationCode]}
+- {scope: 'gofood:catalog:write', description: 'To modify GoFood menu.', flows: [clientCredentials, authorizationCode]}
+- {scope: 'gofood:order:read', description: 'To read GoFood order data.', flows: [clientCredentials, authorizationCode]}
+- {scope: 'gofood:order:write', description: 'To mark an order is ready.', flows: [clientCredentials, authorizationCode]}
+- {scope: 'gofood:outlet:write', description: 'To modify restaurant properties.', flows: [clientCredentials]}
+- {scope: 'promo:food_promo:read', description: 'To retrieve GoFood promotions.', flows: [clientCredentials]}
+- {scope: 'promo:food_promo:write', description: 'To modify GoFood promotions.', flows: [clientCredentials]}
+- {scope: 'payment:transaction:read', description: 'To read payment transaction.', flows: [clientCredentials]}
+- {scope: 'payment:transaction:write', description: 'To modify payment transaction.', flows: [clientCredentials]}
+- {scope: 'payment:pop:read', description: 'To read payment PoP (proof of payment) data.', flows: [clientCredentials]}
+- {scope: 'mokapos:library:read', description: 'To read MokaPOS library data.', flows: [clientCredentials]}
+- {scope: 'mokapos:transaction:read', description: 'To read MokaPOS transaction data.', flows: [clientCredentials]}
+- {scope: 'mokapos:reporting:read', description: 'To read MokaPOS reporting data.', flows: [clientCredentials]}
+- {scope: 'mokapos:customer:read', description: 'To read MokaPOS customer data.', flows: [clientCredentials]}
+- {scope: 'mokapos:checkout:write', description: 'To update MokaPOS checkout data.', flows: [clientCredentials]}
+- {scope: 'mokapos:salestype:read', description: 'To read MokaPOS sales type data.', flows: [clientCredentials]}
+scope_count: 20

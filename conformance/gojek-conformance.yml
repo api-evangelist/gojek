@@ -1,0 +1,91 @@
+generated: '2026-08-22'
+method: searched
+source: https://app.gobiz.com/files/static/cpp/api-reference/index.html
+note: >-
+  Asserted from the published GoBiz documentation, not from an OpenAPI document -
+  Gojek publishes no machine-readable contract for this API.
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Both integration models are OAuth 2.0. Direct Integration uses the
+    client_credentials grant against OAUTH_URL/oauth2/token; Facilitator uses the
+    authorization_code grant against OAUTH_URL/oauth2/auth. The docs cite RFC
+    6749 sections 1.1, 1.4, 2.3.1, 3.1, 3.1.2, 3.2 and 10.12, and RFC 6819.
+  source: https://developer.gobiz.com/docs/api/auth/direct-integration/
+- id: oidc
+  conforms: true
+  evidence: >-
+    The Facilitator flow returns an ID Token (JWT with end-user claims), requires
+    the openid scope, supports nonce / max_age / ui_locales, and cites "OpenID
+    Connect Core 1.0 incorporating errata set 1".
+  source: https://developer.gobiz.com/docs/api/auth/facilitator/
+- id: oidc-discovery
+  conforms: false
+  evidence: >-
+    /.well-known/openid-configuration returns 404 on both accounts.go-jek.com and
+    integration-goauth.gojekapi.com (probed 2026-08-22). Clients must hard-code
+    the endpoints from the docs.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server returns 404 on both GoAuth hosts (probed 2026-08-22).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use a vendor envelope ({success:false, errors:[{message_title,
+    message}]}) served as application/json; no application/problem+json anywhere.
+- id: idempotency
+  conforms: true
+  evidence: >-
+    Idempotency-Key required on Create Payment Transaction (max 32 chars, keys
+    recycled after a month); X-Idempotency-Key required on Create Promotions
+    (String(UUID), max 32 chars).
+  source: https://app.gobiz.com/files/static/cpp/api-reference/index.html
+- id: webhook-signature-hmac
+  conforms: true
+  evidence: X-Go-Signature = HMAC-SHA256(notification_secret_key, request_body).
+  source: https://developer.gobiz.com/docs/api/webhooks/receiving-notifications/
+- id: request-id-tracing
+  conforms: true
+  evidence: X-Request-ID accepted on request and echoed on the response, max 128 characters.
+- id: pagination
+  conforms: false
+  evidence: No pagination contract is documented on any collection endpoint.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on gojek.com, developer.gobiz.com, api.gobiz.co.id and both GoAuth hosts (probed 2026-08-22).
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document is published. Probed 2026-08-22 - /openapi.json,
+    /openapi.yaml, /swagger.json and /api-docs return 404 on api.gobiz.co.id,
+    api.partner-sandbox.gobiz.co.id and developer.gobiz.com. The portal bundles
+    docusaurus-plugin-openapi but its only spec-backed routes are the plugin's
+    unmodified Petstore demo (see the sitemap at developer.gobiz.com/sitemap.xml).
+- id: asyncapi
+  conforms: false
+  evidence: A documented webhook surface exists (11 events) but no AsyncAPI document is published.
+domain_standards:
+- id: qris
+  conforms: true
+  scope: Payment Integration
+  evidence: >-
+    Create Payment Transaction accepts payment_type "qris" and returns QR data
+    the merchant renders. QRIS is Bank Indonesia's national QR payment standard
+    (Quick Response Code Indonesian Standard), so a merchant already speaking
+    QRIS integrates without a bespoke connector.
+  source: https://app.gobiz.com/files/static/cpp/api-reference/index.html#create-payment-transaction
+- id: iso-4217-currency
+  conforms: true
+  evidence: transaction_details.currency carries ISO 4217 codes ("IDR").
+- id: mqtt-3.1.1
+  conforms: true
+  scope: Gojek open source (Courier), not the GoBiz API
+  evidence: >-
+    Gojek publishes the Courier client family (courier-go, courier-android,
+    courier-iOS, courier-flutter) implementing MQTT over its own broker fleet.
+  source: https://github.com/gojek/courier-go
+compliance_program_published: false
+compliance_note: >-
+  No SOC 2 / ISO 27001 / PCI DSS certification page, trust center or compliance
+  program was found for Gojek or GoBiz, so no Compliance pointer is emitted.

@@ -1,0 +1,71 @@
+generated: '2026-08-22'
+method: searched
+source: https://developer.gobiz.com/docs/api/auth/direct-integration/
+docs: https://developer.gobiz.com/docs/category/authentication
+summary:
+  types: [oauth2, openIdConnect]
+  api_key_in: []
+  oauth2_flows: [clientCredentials, authorizationCode]
+  note: >-
+    GoBiz has no API-key surface. Every call to api.gobiz.co.id carries an
+    OAuth 2.0 Bearer token issued by the Gojek GoAuth server. Two integration
+    models exist and each uses a different grant.
+schemes:
+- name: go_auth_client_credentials
+  type: oauth2
+  flow: clientCredentials
+  integration_model: Direct Integration
+  audience: Merchants integrating their own systems (machine-to-machine)
+  token_url_sandbox: https://integration-goauth.gojekapi.com/oauth2/token
+  token_url_production: https://accounts.go-jek.com/oauth2/token
+  client_authentication: HTTP Basic (client_id:client_secret) on the token endpoint
+  parameters:
+  - {name: client_id, required: true}
+  - {name: client_secret, required: true}
+  - {name: grant_type, required: true, value: client_credentials}
+  - {name: scope, required: true, note: "If access level is not provided, no scope is granted to the token."}
+  response:
+    access_token: string
+    expires_in: 3600
+    token_type: Bearer
+    scope: string
+  scope_count: 18
+  source: https://developer.gobiz.com/docs/api/auth/direct-integration/
+- name: go_auth_authorization_code
+  type: oauth2
+  flow: authorizationCode
+  openid_connect: true
+  integration_model: Facilitator
+  audience: POS providers and online-order aggregators acting on behalf of merchants
+  authorization_url_sandbox: https://integration-goauth.gojekapi.com/oauth2/auth
+  token_url_sandbox: https://integration-goauth.gojekapi.com/oauth2/token
+  token_url_production: https://accounts.go-jek.com/oauth2/token
+  parameters:
+  - {name: client_id, required: true}
+  - {name: response_type, required: true, value: code}
+  - {name: scope, required: true, note: "must include at least 'openid'"}
+  - {name: state, required: true, note: "CSRF token, >= 8 chars, URL-safe encoded (RFC 6749 s10.12)"}
+  - {name: redirect_uri, required: true, note: "must match a redirect URI registered with the client credentials"}
+  - {name: nonce, required: false, note: "binds the client session to the ID Token, mitigates replay"}
+  - {name: max_age, required: false}
+  - {name: ui_locales, required: false, note: "id | en"}
+  returns:
+  - access_token
+  - id_token (JWT with end-user claims)
+  - refresh via the 'offline' scope
+  standards_cited_by_provider:
+  - RFC 6749 (OAuth 2.0)
+  - RFC 6819 (OAuth 2.0 Threat Model)
+  - OpenID Connect Core 1.0 incorporating errata set 1
+  source: https://developer.gobiz.com/docs/api/auth/facilitator/
+request_header:
+  name: Authorization
+  value: "Bearer {access-token}"
+  required: true
+webhook_authentication:
+  header: X-Go-Signature
+  algorithm: HMAC-SHA256(notification_secret_key, request_body)
+  source: https://developer.gobiz.com/docs/api/webhooks/receiving-notifications/
+discovery:
+  openid_configuration: not published (probed 2026-08-22, 404 on accounts.go-jek.com and integration-goauth.gojekapi.com)
+  oauth_authorization_server: not published (probed 2026-08-22, 404)
