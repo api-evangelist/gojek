@@ -40,6 +40,20 @@ tags:
 - Super App
 - Ride Hailing
 - Food Delivery
+- Point-of-Sale
+- Merchant Platform
+- Payments
+- QRIS
+- Logistics
+- Indonesia
+- Southeast Asia
+- Webhook
+- Authentication
+tags_raw:
+- Company
+- Super App
+- Ride Hailing
+- Food Delivery
 - Point of Sale
 - Merchant Platform
 - Payments
@@ -63,6 +77,12 @@ apis:
   humanURL: https://developer.gobiz.com/docs/api/intro/
   baseURL: https://api.gobiz.co.id
   tags:
+  - Merchant Platform
+  - Food Delivery
+  - Point-of-Sale
+  - Payments
+  - Webhook
+  tags_raw:
   - Merchant Platform
   - Food Delivery
   - Point of Sale
