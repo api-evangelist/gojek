@@ -1,0 +1,124 @@
+edges:
+- partner_name: Go module proxy
+  partner: null
+  partner_match: null
+  type: register
+  direction: provider-built
+  category: official SDK (Go)
+  evidence: https://pkg.go.dev/github.com/gojek/courier-go
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/gojek/courier-go
+      version: v0.7.17
+      released: '2026-06-02'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/gojek/courier-go
+      repo_leg: github-org:gojek
+      publisher_leg: org:gojek
+      matched_by: github-org
+    - name: github.com/gojek/darkroom
+      version: v0.4.2
+      released: '2023-10-02'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/gojek/darkroom
+      repo_leg: github-org:gojek
+      publisher_leg: org:gojek
+      matched_by: github-org
+    - name: github.com/gojek/heimdall/v7
+      version: v7.3.1
+      released: '2026-06-29'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/gojek/heimdall/v7
+      repo_leg: github-org:gojek
+      publisher_leg: org:gojek
+      matched_by: github-org
+    - name: github.com/gojek/valkyrie
+      version: v0.0.0-20190210220504-8f62c1e7ba45
+      released: '2019-02-10'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/gojek/valkyrie
+      repo_leg: github-org:gojek
+      publisher_leg: org:gojek
+      matched_by: github-org
+    - name: github.com/gojek/weaver
+      version: v0.0.1
+      released: '2019-02-04'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/gojek/weaver
+      repo_leg: github-org:gojek
+      publisher_leg: org:gojek
+      matched_by: github-org
+    - name: github.com/gojek/work
+      version: v0.8.2
+      released: '2026-06-01'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/gojek/work
+      repo_leg: github-org:gojek
+      publisher_leg: org:gojek
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+- partner_name: Maven Central
+  partner: maven-central
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Java/JVM)
+  evidence: https://central.sonatype.com/artifact/com.gojek.courier/courier
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: com.gojek.courier:courier
+      version: 0.3.9
+      released: '2026-10-12'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.gojek.courier/courier
+      repo_leg: github-org:gojek
+      publisher_leg: groupId:gojek.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+generated: '2026-10-18'
+method: searched
+source:
+- https://api.nuget.org/v3
+- https://crates.io/api/v1
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
+checked:
+- https://api.nuget.org/v3
+- https://crates.io/api/v1
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
